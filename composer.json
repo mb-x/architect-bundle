@@ -12,21 +12,10 @@
     }
   ],
   "require": {
-    "php": ">=5.5.0",
-    "symfony/form": "^2.7 || ^3.0",
-    "symfony/framework-bundle": "^2.7 || ^3.0",
-    "symfony/twig-bundle": "^2.7 || ^3.0",
-    "doctrine/doctrine-bundle" : "*"
-  },
-  "require-dev": {
-    "doctrine/doctrine-bundle": "^1.3",
-    "symfony/console": "^2.7 || ^3.0",
-    "symfony/phpunit-bridge": "^2.7 || ^3.0",
-    "symfony/yaml": "^2.7 || ^3.0",
-    "phpunit/phpunit": "~4.8|~5.0"
-  },
-  "conflict": {
-    "symfony/doctrine-bridge": "<2.7"
+    "php": ">=5.3.9",
+    "symfony/framework-bundle": ">=2.1",
+    "twig/twig": "*",
+    "doctrine/doctrine-bundle": "*"
   },
   "autoload": {
     "psr-4": {
