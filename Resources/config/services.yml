@@ -1,4 +1,11 @@
+parameters:
+    mbx_abstract_entity_manager.class: Mbx\SymfonyBootstrapBundle\Abstracts\AbstractEntityManager
+
 services:
-#    mbx_symfony_bootstrap.example:
-#        class: Mbx\SymfonyBootstrapBundle\Example
-#        arguments: ["@service_id", "plain_value", %parameter%]
+    mbx_abstract_entity_manager:
+        abstract: true
+        class: %orca_abstract_entity_manager.class%
+        arguments: [@doctrine.orm.entity_manager]
+    mbx_abstract_form_handler:
+        abstract: true
+        arguments: [@form.factory, @request, @router]
