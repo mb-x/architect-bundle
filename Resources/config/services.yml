@@ -1,0 +1,4 @@
+services:
+#    mbx_symfony_bootstrap.example:
+#        class: Mbx\SymfonyBootstrapBundle\Example
+#        arguments: ["@service_id", "plain_value", %parameter%]
