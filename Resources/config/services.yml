@@ -1,5 +1,6 @@
 parameters:
     mbx_abstract_entity_manager.class: Mbx\SymfonyBootstrapBundle\Abstracts\AbstractEntityManager
+    mbx.twig_extension.class: Mbx\SymfonyBootstrapBundle\Twig\MbxTwigExtension
 
 services:
     mbx_abstract_entity_manager:
@@ -9,3 +10,9 @@ services:
     mbx_abstract_form_handler:
         abstract: true
         arguments: ['@form.factory', '@request', '@router']
+    mbx.twig_extension:
+        class: '%mbx.twig_extension.class%'
+        arguments: ['@service_container']
+    #   public: false
+        tags:
+            - { name: twig.extension }
