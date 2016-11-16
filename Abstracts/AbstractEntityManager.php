@@ -19,7 +19,7 @@ abstract class AbstractEntityManager implements EntityManagerInterface {
     protected $repository;
 
     public function init() {
-        $this->repository = $this->initRepository();
+        $this->repository = $this->em->getRepository($this->initRepositoryNS());
     }
 
     /**
@@ -52,13 +52,17 @@ abstract class AbstractEntityManager implements EntityManagerInterface {
     }
 
     public function save(EntityInterface $entity) {
+        $this->beforeSave($entity);
         $this->em->persist($entity);
         $this->em->flush();
+        $this->afterSave($entity);
     }
 
     public function remove(EntityInterface $entity) {
+        $this->beforeRemove($entity);
         $this->em->remove($entity);
         $this->em->flush();
+        $this->afterRemove($entity);
     }
 
 }
