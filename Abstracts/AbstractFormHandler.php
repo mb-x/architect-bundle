@@ -51,8 +51,9 @@ abstract class AbstractFormHandler implements FormHandlerInterface {
     public function processForm(EntityInterface $entity) {
         $this->createForm($entity);
         $this->form->handleRequest($this->request);
-
+        $this->beforeCheckForm($entity);
         if ($this->form->isSubmitted() && $this->form->isValid()) {
+            $this->afterCheckForm($entity);
             $this->manager->save($entity);
             return true;
         }
@@ -69,7 +70,9 @@ abstract class AbstractFormHandler implements FormHandlerInterface {
     public function processDeleteForm(EntityInterface $entity) {
         $form = $this->createDeleteForm($entity);
         $form->handleRequest($this->request);
+        $this->beforeCheckDeleteForm($entity);
         if ($form->isSubmitted() && $form->isValid()) {
+            $this->afterCheckDeleteForm($entity);
             $this->manager->remove($entity);
             return true;
         }

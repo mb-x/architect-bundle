@@ -29,6 +29,9 @@ interface FormHandlerInterface {
      public function processForm(EntityInterface $entity);
 
      public function createForm(EntityInterface $entity);
+
+    public function beforeCheckForm(EntityInterface $entity);
+    public function afterCheckForm(EntityInterface $entity);
      /**
      * Creates a form to delete an entity.
      * @return \Symfony\Component\Form\Form The form
@@ -36,4 +39,8 @@ interface FormHandlerInterface {
     public function createDeleteForm(EntityInterface $entity);
     
     public function processDeleteForm(EntityInterface $entity);
+
+    public function beforeCheckDeleteForm(EntityInterface $entity);
+
+    public function afterCheckDeleteForm(EntityInterface $entity);
 }
