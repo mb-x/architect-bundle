@@ -2,6 +2,7 @@
 
 namespace Mbx\SymfonyBootstrapBundle\Abstracts;
 
+use Mbx\SymfonyBootstrapBundle\Exception\NotStringException;
 use Symfony\Component\Form\FormFactory;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Router;
@@ -27,6 +28,12 @@ abstract class AbstractFormHandler implements FormHandlerInterface {
     public function init() {
         $this->deleteRouteName =  $this->initDeleteRouteName();
         $this->formTypeNS = $this->initFormTypeNS();
+        if(!trim($this->deleteRouteName) || !is_string($this->initDeleteRouteName())){
+            throw new NotStringException('Delete Route Name');
+        }
+        if(!trim($this->formTypeNS) || !is_string($this->initFormTypeNS())){
+            throw new NotStringException('Form Type Namespace');
+        }
     }
     
     public function __construct(FormFactory $formFactory, Request $request, Router $router, AbstractEntityManager $manager) {
