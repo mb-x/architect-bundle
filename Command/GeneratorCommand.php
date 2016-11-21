@@ -62,7 +62,10 @@ class GeneratorCommand extends ContainerAwareCommand
         $classType = $input->getOption('classType');
         $output->writeln($classType);
         $generator = $this->getGenerator($bundle);
-        if($classType == self::ManagerType || $classType==self::AllType){
+        if($classType == self::ManagerType || $classType==self::AllType){ /*Manager block*/
+            $output->writeln('---------------------------------------');
+            $output->writeln('|     Generating Class Manager ...     |');
+            $output->writeln('---------------------------------------');
             $generator->generateManager($bundle, $entity);
             $output->writeln(
                 sprintf(
@@ -71,8 +74,15 @@ class GeneratorCommand extends ContainerAwareCommand
                     $generator->getClassPath()
                 )
             );
+            $output->writeln('---------------------------------------');
+            $output->writeln('Add the following lines to your services.yml file:');
+            $output->writeln($generator->getManagerServiceLines());
+            $output->writeln('---------------------------------------');
         }
-        if($classType == self::FormHandlerType || $classType==self::AllType) {
+        if($classType == self::FormHandlerType || $classType==self::AllType) {/*FormHandler block*/
+            $output->writeln('---------------------------------------');
+            $output->writeln('|   Generating Class FormHandler ...   |');
+            $output->writeln('---------------------------------------');
             $generator->generateFormHandler($bundle, $entity);
             $output->writeln(
                 sprintf(
@@ -81,6 +91,10 @@ class GeneratorCommand extends ContainerAwareCommand
                     $generator->getClassPath()
                 )
             );
+            $output->writeln('---------------------------------------');
+            $output->writeln('Add the following lines to your services.yml file:');
+            $output->writeln($generator->getFormHandlerServiceLines());
+            $output->writeln('---------------------------------------');
         }
     }
     /**

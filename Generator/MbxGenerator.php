@@ -17,10 +17,15 @@ class MbxGenerator extends Generator
      */
     private $classPath;
 
+    private $entityName;
+    private $bundle_namespace;
+
     public function __construct()
     {
         $this->className = '';
         $this->classPath = '';
+        $this->bundle_namespace = '';
+        $this->entityName = '';
     }
     /**
      * @return string
@@ -37,6 +42,55 @@ class MbxGenerator extends Generator
         return $this->classPath;
     }
 
+
+    /**
+     * @return string
+     */
+    public function getEntityName()
+    {
+        return $this->entityName;
+    }
+
+
+    /**
+     * @return string
+     */
+    public function getBundleNamespace()
+    {
+        return $this->bundle_namespace;
+    }
+
+    private function getManagerServiceName(){
+        return strtolower($this->getBundleNamespace().'_'.$this->getEntityName()).'_manager';
+    }
+    private function getFormHandlerServiceName(){
+        return strtolower($this->getBundleNamespace().'_'.$this->getEntityName()).'_form_handler';
+    }
+    public function getManagerServiceLines(){
+        $lines =  sprintf(
+            "%s:
+                class: %s
+                parent: mbx_abstract_entity_manager",
+            $this->getManagerServiceName(),
+            $this->getBundleNamespace().'\\'.'Manager'.'\\'.$this->getClassName()
+            );
+        return $lines;
+    }
+    public function getFormHandlerServiceLines(){
+        $lines =  sprintf(
+                "%s:
+                class: %s
+                parent: mbx_abstract_form_handler
+                arguments: ['@%s']
+                scope: request"
+                ,
+                $this->getFormHandlerServiceName(),
+                $this->getBundleNamespace().'\\'.'FormHandler'.'\\'.$this->getClassName(),
+                $this->getManagerServiceName()
+            );
+        return $lines;
+    }
+
     /**
      * Generates the Manager class if it does not exist.
      *
@@ -47,13 +101,14 @@ class MbxGenerator extends Generator
     {
         $parts = explode("\\", $entity);
         $entityClass = array_pop($parts);
-//        $entityClassLowerCase = strtolower($entityClass);
+        $this->entityName = $entity;
         $this->className = $entityClass . 'Manager';
+        $this->bundle_namespace = $bundle->getNamespace();
         $dirPath = $bundle->getPath() . '/Manager';
         $this->classPath = $dirPath . '/' . str_replace('\\', '/', $entity) . 'Manager.php';
-//        if (file_exists($this->classPath)) {
-//            throw new \RuntimeException(sprintf('Unable to generate the %s Manager class as it already exists under the %s file', $this->className, $this->classPath));
-//        }
+        if (file_exists($this->classPath)) {
+            throw new \RuntimeException(sprintf('Unable to generate the %s Manager class as it already exists under the %s file', $this->className, $this->classPath));
+        }
         $parts = explode('\\', $entity);
         array_pop($parts);
         $this->renderFile('manager.php.twig', $this->classPath, array(
@@ -67,13 +122,13 @@ class MbxGenerator extends Generator
     {
         $parts = explode("\\", $entity);
         $entityClass = array_pop($parts);
-//        $entityClassLowerCase = strtolower($entityClass);
         $this->className = $entityClass . 'FormHandler';
+        $this->bundle_namespace = $bundle->getNamespace();
         $dirPath = $bundle->getPath() . '/FormHandler';
         $this->classPath = $dirPath . '/' . str_replace('\\', '/', $entity) . 'FormHandler.php';
-//        if (file_exists($this->classPath)) {
-//            throw new \RuntimeException(sprintf('Unable to generate the %s FormHandler class as it already exists under the %s file', $this->className, $this->classPath));
-//        }
+        if (file_exists($this->classPath)) {
+            throw new \RuntimeException(sprintf('Unable to generate the %s FormHandler class as it already exists under the %s file', $this->className, $this->classPath));
+        }
         $parts = explode('\\', $entity);
         array_pop($parts);
         $this->renderFile('form_handler.php.twig', $this->classPath, array(
