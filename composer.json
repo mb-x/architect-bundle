@@ -29,8 +29,5 @@
     "psr-4": {
       "Mbx\\ArchitectBundle\\Tests\\": "Tests/"
     }
-  },
-  "replace": {
-    "mb-x/symfony-bootstrap-bundle": "self.version"
   }
 }
