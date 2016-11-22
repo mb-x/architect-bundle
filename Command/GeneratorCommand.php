@@ -1,7 +1,7 @@
 <?php
-namespace Mbx\SymfonyBootstrapBundle\Command;
+namespace Mbx\ArchitectBundle\Command;
 
-use Mbx\SymfonyBootstrapBundle\Generator\MbxGenerator;
+use Mbx\ArchitectBundle\Generator\MbxGenerator;
 use Sensio\Bundle\GeneratorBundle\Command\Validators;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputArgument;
@@ -123,10 +123,10 @@ class GeneratorCommand extends ContainerAwareCommand
     protected function getSkeletonDirs(BundleInterface $bundle = null)
     {
         $skeletonDirs = array();
-        if (isset($bundle) && is_dir($dir = $bundle->getPath().'/Resources/MbxSymfonyBootstrapBundle/views/Skeleton')) {
+        if (isset($bundle) && is_dir($dir = $bundle->getPath().'/Resources/MbxArchitectBundle/views/Skeleton')) {
             $skeletonDirs[] = $dir;
         }
-        if (is_dir($dir = $this->getContainer()->get('kernel')->getRootdir().'/Resources/MbxSymfonyBootstrapBundle/views/Skeleton')) {
+        if (is_dir($dir = $this->getContainer()->get('kernel')->getRootdir().'/Resources/MbxArchitectBundle/views/Skeleton')) {
             $skeletonDirs[] = $dir;
         }
         $reflClass = new \ReflectionClass(get_class($this));

@@ -1,8 +1,8 @@
 <?php
 
-namespace Mbx\SymfonyBootstrapBundle\Interfaces;
+namespace Mbx\ArchitectBundle\Interfaces;
 
-use Mbx\SymfonyBootstrapBundle\Interfaces\EntityInterface;
+use Mbx\ArchitectBundle\Interfaces\EntityInterface;
 /**
  * Description of EntityManagerInterface
  *

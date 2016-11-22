@@ -1,5 +1,5 @@
 <?php
-namespace Mbx\SymfonyBootstrapBundle\Generator;
+namespace Mbx\ArchitectBundle\Generator;
 use Sensio\Bundle\GeneratorBundle\Generator\Generator;
 use Symfony\Component\HttpKernel\Bundle\BundleInterface;
 
@@ -61,16 +61,16 @@ class MbxGenerator extends Generator
     }
 
     private function getManagerServiceName(){
-        return strtolower($this->getBundleNamespace().'_'.$this->getEntityName()).'_manager';
+        return strtolower($this->getBundleNamespace().'.'.$this->getEntityName()).'_manager';
     }
     private function getFormHandlerServiceName(){
-        return strtolower($this->getBundleNamespace().'_'.$this->getEntityName()).'_form_handler';
+        return strtolower($this->getBundleNamespace().'.'.$this->getEntityName()).'_form_handler';
     }
     public function getManagerServiceLines(){
         $lines =  sprintf(
             "%s:
                 class: %s
-                parent: mbx_abstract_entity_manager",
+                parent: mbx.abstract_entity_manager",
             $this->getManagerServiceName(),
             $this->getBundleNamespace().'\\'.'Manager'.'\\'.$this->getClassName()
             );
@@ -80,7 +80,7 @@ class MbxGenerator extends Generator
         $lines =  sprintf(
                 "%s:
                 class: %s
-                parent: mbx_abstract_form_handler
+                parent: mbx.abstract_form_handler
                 arguments: ['@%s']
                 scope: request"
                 ,

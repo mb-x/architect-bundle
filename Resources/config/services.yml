@@ -1,13 +1,13 @@
 parameters:
-    mbx_abstract_entity_manager.class: Mbx\SymfonyBootstrapBundle\Abstracts\AbstractEntityManager
-    mbx.twig_extension.class: Mbx\SymfonyBootstrapBundle\Twig\MbxTwigExtension
+    mbx.abstract_entity_manager.class: Mbx\ArchitectBundle\Abstracts\AbstractEntityManager
+    mbx.twig_extension.class: Mbx\ArchitectBundle\Twig\MbxTwigExtension
 
 services:
-    mbx_abstract_entity_manager:
+    mbx.abstract_entity_manager:
         abstract: true
-        class: '%mbx_abstract_entity_manager.class%'
+        class: '%mbx.abstract_entity_manager.class%'
         arguments: ['@doctrine.orm.entity_manager']
-    mbx_abstract_form_handler:
+    mbx.abstract_form_handler:
         abstract: true
         arguments: ['@form.factory', '@request', '@router']
     mbx.twig_extension:

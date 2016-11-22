@@ -1,5 +1,5 @@
 <?php
-namespace Mbx\SymfonyBootstrapBundle\Twig;
+namespace Mbx\ArchitectBundle\Twig;
 
 use Symfony\Component\DependencyInjection\ContainerInterface;
 /**

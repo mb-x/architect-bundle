@@ -1,14 +1,14 @@
 <?php
 
-namespace Mbx\SymfonyBootstrapBundle\Abstracts;
+namespace Mbx\ArchitectBundle\Abstracts;
 
-use Mbx\SymfonyBootstrapBundle\Exception\NotStringException;
+use Mbx\ArchitectBundle\Exception\NotStringException;
 use Symfony\Component\Form\FormFactory;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Router;
-use Mbx\SymfonyBootstrapBundle\Interfaces\FormHandlerInterface;
-use Mbx\SymfonyBootstrapBundle\Interfaces\EntityInterface;
-use Mbx\SymfonyBootstrapBundle\Abstracts\AbstractEntityManager;
+use Mbx\ArchitectBundle\Interfaces\FormHandlerInterface;
+use Mbx\ArchitectBundle\Interfaces\EntityInterface;
+use Mbx\ArchitectBundle\Abstracts\AbstractEntityManager;
 /**
  * Abstract form handler
  *

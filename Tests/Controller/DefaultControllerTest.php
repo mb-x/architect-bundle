@@ -1,6 +1,6 @@
 <?php
 
-namespace Mbx\SymfonyBootstrapBundle\Tests\Controller;
+namespace Mbx\ArchitectBundle\Tests\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 

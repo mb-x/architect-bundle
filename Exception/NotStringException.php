@@ -6,7 +6,7 @@
  * Time: 18:32
  */
 
-namespace Mbx\SymfonyBootstrapBundle\Exception;
+namespace Mbx\ArchitectBundle\Exception;
 
 
 class NotStringException extends \Exception

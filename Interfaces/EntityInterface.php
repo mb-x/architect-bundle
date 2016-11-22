@@ -1,6 +1,6 @@
 <?php
 
-namespace Mbx\SymfonyBootstrapBundle\Interfaces;
+namespace Mbx\ArchitectBundle\Interfaces;
 
 /**
  * Entity Interface

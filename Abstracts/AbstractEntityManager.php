@@ -1,11 +1,11 @@
 <?php
 
-namespace Mbx\SymfonyBootstrapBundle\Abstracts;
+namespace Mbx\ArchitectBundle\Abstracts;
 
 use Doctrine\ORM\EntityManager;
-use Mbx\SymfonyBootstrapBundle\Interfaces\EntityManagerInterface;
+use Mbx\ArchitectBundle\Interfaces\EntityManagerInterface;
 use Doctrine\ORM\EntityNotFoundException;
-use Mbx\SymfonyBootstrapBundle\Interfaces\EntityInterface;
+use Mbx\ArchitectBundle\Interfaces\EntityInterface;
 
 /**
  * Abstract Entity Manager

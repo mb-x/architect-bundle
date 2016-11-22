@@ -1,9 +1,9 @@
 {
-  "name": "mb-x/symfony-bootstrap-bundle",
+  "name": "mb-x/architect-bundle",
   "type": "symfony-bundle",
-  "description": "Symfony MbxSymfonyBootstrapBundle",
+  "description": "Symfony MbxArchitectBundle",
   "keywords": ["Utils"],
-  "homepage": "https://github.com/mb-x/symfony-bootstrap-bundle",
+  "homepage": "https://github.com/mb-x/architect-bundle",
   "license": "MIT",
   "authors": [
     {
@@ -13,13 +13,13 @@
   ],
   "require": {
     "php": ">=5.3.9",
-    "symfony/framework-bundle": ">=2.1",
+    "symfony/framework-bundle": ">=2.7",
     "twig/twig": "*",
     "doctrine/doctrine-bundle": "*"
   },
   "autoload": {
     "psr-4": {
-      "Mbx\\SymfonyBootstrapBundle\\": ""
+      "Mbx\\ArchitectBundle\\": ""
     },
     "exclude-from-classmap": [
       "/Tests/"
@@ -27,7 +27,7 @@
   },
   "autoload-dev": {
     "psr-4": {
-      "Mbx\\SymfonyBootstrapBundle\\Tests\\": "Tests/"
+      "Mbx\\ArchitectBundle\\Tests\\": "Tests/"
     }
   }
 }

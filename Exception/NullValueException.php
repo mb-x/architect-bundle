@@ -1,5 +1,5 @@
 <?php
-namespace Mbx\SymfonyBootstrapBundle\Exception;
+namespace Mbx\ArchitectBundle\Exception;
 /**
  * Author Mohamed Bengrich <mbengrich.dev@gmail.com>
  */

@@ -1,3 +1,0 @@
-mbx_symfony_bootstrap_homepage:
-    path:     /
-    defaults: { _controller: MbxSymfonyBootstrapBundle:Default:index }
