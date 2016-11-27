@@ -3,10 +3,16 @@
 namespace Mbx\ArchitectBundle\Interfaces;
 
 /**
- * Entity Interface
+ * Interface EntityInterface
  *
  * @author Mohamed Bengrich <mbengrich.dev@gmail.com>
+ *
+ * @package Mbx\ArchitectBundle\Interfaces
  */
 interface EntityInterface {
+
+    /**
+     * @return mixed
+     */
     public function getId();
 }

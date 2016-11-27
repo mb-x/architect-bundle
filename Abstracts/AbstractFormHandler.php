@@ -16,15 +16,40 @@ use Mbx\ArchitectBundle\Abstracts\AbstractEntityManager;
  */
 abstract class AbstractFormHandler implements FormHandlerInterface {
 
+    /**
+     * @var FormFactory
+     */
     protected $formFactory;
+    /**
+     * @var Request
+     */
     protected $request;
+    /**
+     * @var FormType The FormType of the managed entity
+     */
     protected $form;
+    /**
+     * @var Router
+     */
     protected $router;
+    /**
+     * @var EntityManager child of \Mbx\ArchitectBundle\Abstracts\AbstractEntityManager
+     */
     protected $manager;
-    
+
+    /**
+     * @var string The FormType's namespace of the managed entity
+     */
     protected $formTypeNS;
+    /**
+     * @var string The Route Name for delete Action of the managed entity
+     */
     protected $deleteRouteName;
 
+
+    /**
+     * @throws NotStringException
+     */
     public function init() {
         $this->deleteRouteName =  $this->initDeleteRouteName();
         $this->formTypeNS = $this->initFormTypeNS();
@@ -35,7 +60,15 @@ abstract class AbstractFormHandler implements FormHandlerInterface {
             throw new NotStringException('Form Type Namespace');
         }
     }
-    
+
+
+    /**
+     * @param FormFactory $formFactory
+     * @param Request $request
+     * @param Router $router
+     * @param \Mbx\ArchitectBundle\Abstracts\AbstractEntityManager $manager
+     * @throws NotStringException
+     */
     public function __construct(FormFactory $formFactory, Request $request, Router $router, AbstractEntityManager $manager) {
         $this->formFactory = $formFactory;
         $this->request = $request;
@@ -44,16 +77,19 @@ abstract class AbstractFormHandler implements FormHandlerInterface {
         $this->init();
     }
 
+
+    /**
+     * @return FormType
+     */
     public function getForm() {
         return $this->form;
     }
 
+
     /**
-     * Create Form, hanle Request and flush entity,
-     * make sure you called $this->processEntity before calling this function,
-     * otherwise, an exception will be thrown
-     * @return boolean
-     * @throws \Exception
+     * Creates form, handles request and saves entity if form is submitted and valid
+     * @param EntityInterface $entity
+     * @return bool
      */
     public function processForm(EntityInterface $entity) {
         $this->createForm($entity);
@@ -67,12 +103,12 @@ abstract class AbstractFormHandler implements FormHandlerInterface {
         return FALSE;
     }
 
+
     /**
-     * Create Delete Form, hanle Request and remove entity,
-     * make sure you called $this->processEntity before calling this function,
-     * otherwise, an exception will be thrown
-     * @return boolean
-     * @throws \Exception
+     * Creates delete form, handles request and removes entity if form is submitted and valid
+     *
+     * @param EntityInterface $entity
+     * @return bool
      */
     public function processDeleteForm(EntityInterface $entity) {
         $form = $this->createDeleteForm($entity);
@@ -86,13 +122,21 @@ abstract class AbstractFormHandler implements FormHandlerInterface {
         return FALSE;
     }
 
-     public function createForm(EntityInterface $entity) {
+
+    /**
+     * Creates a form for a managed entity.
+     *
+     * @param EntityInterface $entity
+     */
+    public function createForm(EntityInterface $entity) {
         $this->form = $this->formFactory->create($this->formTypeNS, $entity);
     }
 
+
     /**
-     * Creates a form to delete an entity.
-     * @return \Symfony\Component\Form\Form The form
+     * Creates a form to delete a managed entity.
+     * @param EntityInterface $entity
+     * @return mixed
      */
     public function createDeleteForm(EntityInterface $entity) {
         return $this->formFactory->createBuilder()

@@ -14,26 +14,55 @@ class {{ entity_class }}Manager extends AbstractEntityManager
 {% endblock class_definition %}
 {
 {% block class_body %}
+    /**
+     * Returns the repository namespace
+     *
+     * @return string
+     */
     public function initRepositoryNS()
     {
         return {{ entity_class }}::class;
     }
 
+    /**
+     * Code to execute before saving the managed entity
+     *
+     * @param \Mbx\ArchitectBundle\Interfaces\EntityInterface $entity
+     * @return mixed
+     */
     public function beforeSave(EntityInterface $entity)
     {
         // TODO: Implement beforeSave() method.
     }
 
+    /**
+     * Code to execute after saving the managed entity
+     *
+     * @param \Mbx\ArchitectBundle\Interfaces\EntityInterface $entity
+     * @return mixed
+     */
     public function afterSave(EntityInterface $entity)
     {
         // TODO: Implement afterSave() method.
     }
 
+    /**
+     * Code to execute before removing the managed entity
+     *
+     * @param \Mbx\ArchitectBundle\Interfaces\EntityInterface $entity
+     * @return mixed
+     */
     public function beforeRemove(EntityInterface $entity)
     {
         // TODO: Implement beforeRemove() method.
     }
 
+    /**
+     * Code to execute after removing the managed entity
+     *
+     * @param \Mbx\ArchitectBundle\Interfaces\EntityInterface $entity
+     * @return mixed
+     */
     public function afterRemove(EntityInterface $entity)
     {
         // TODO: Implement afterRemove() method.

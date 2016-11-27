@@ -3,44 +3,102 @@
 namespace Mbx\ArchitectBundle\Interfaces;
 
 use Mbx\ArchitectBundle\Interfaces\EntityInterface;
+
 /**
- * Description of EntityManagerInterface
+ * Interface FormHandlerInterface
  *
  * @author Mohamed Bengrich <mbengrich.dev@gmail.com>
+ *
+ * @package Mbx\ArchitectBundle\Interfaces
  */
-interface FormHandlerInterface {
+interface FormHandlerInterface
+{
+
     /**
+     * Init logic
+     */
+    public function init();
+
+    /**
+     * Returns the route name of delete action
      *
+     * @return string
      */
-     public function init();
-     
-     public function initDeleteRouteName();
-     
-     public function initFormTypeNS();
+    public function initDeleteRouteName();
 
-     public function getForm();
-     /**
-     * Create Form, hanle Request and flush entity,
-     * make sure you called $this->processEntity before calling this function,
-     * otherwise, an exception will be thrown
-     * @return boolean
-     * @throws \Exception
+    /**
+     * Returns the FormType's namespace of the managed entity
+     *
+     * @return string
      */
-     public function processForm(EntityInterface $entity);
+    public function initFormTypeNS();
 
-     public function createForm(EntityInterface $entity);
+    /**
+     * @return FormType
+     */
+    public function getForm();
 
+    /**
+     * Creates form, handles request and saves entity if form is submitted and valid
+     *
+     * @param \Mbx\ArchitectBundle\Interfaces\EntityInterface $entity
+     * @return bool
+     */
+    public function processForm(EntityInterface $entity);
+
+
+    /**
+     * Creates a form for a managed entity.
+     *
+     * @param \Mbx\ArchitectBundle\Interfaces\EntityInterface $entity
+     */
+    public function createForm(EntityInterface $entity);
+
+    /**
+     * Code to execute before checking if form is submitted and valid
+     *
+     * @param \Mbx\ArchitectBundle\Interfaces\EntityInterface $entity
+     * @return mixed
+     */
     public function beforeCheckForm(EntityInterface $entity);
+
+    /**
+     * Code to execute after checking if form is submitted and valid
+     *
+     * @param \Mbx\ArchitectBundle\Interfaces\EntityInterface $entity
+     * @return mixed
+     */
     public function afterCheckForm(EntityInterface $entity);
-     /**
-     * Creates a form to delete an entity.
-     * @return \Symfony\Component\Form\Form The form
+
+    /**
+     * Creates a form to delete a managed entity.
+     *
+     * @param \Mbx\ArchitectBundle\Interfaces\EntityInterface $entity
+     * @return mixed
      */
     public function createDeleteForm(EntityInterface $entity);
-    
+
+    /**
+     * Creates delete form, handles request and removes entity if form is submitted and valid
+     *
+     * @param \Mbx\ArchitectBundle\Interfaces\EntityInterface $entity
+     * @return bool
+     */
     public function processDeleteForm(EntityInterface $entity);
 
+    /**
+     * Code to execute before checking if delete form is submitted and valid
+     *
+     * @param \Mbx\ArchitectBundle\Interfaces\EntityInterface $entity
+     * @return mixed
+     */
     public function beforeCheckDeleteForm(EntityInterface $entity);
 
+    /**
+     * Code to execute after checking if delete form is submitted and valid
+     *
+     * @param \Mbx\ArchitectBundle\Interfaces\EntityInterface $entity
+     * @return mixed
+     */
     public function afterCheckDeleteForm(EntityInterface $entity);
 }

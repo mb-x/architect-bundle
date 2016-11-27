@@ -14,16 +14,28 @@ use Mbx\ArchitectBundle\Interfaces\EntityInterface;
  */
 abstract class AbstractEntityManager implements EntityManagerInterface {
 
+    /**
+     * @var \Doctrine\ORM\EntityManager
+     */
     protected $em;
+    /**
+     * @var EntityInterface Entity that implements EntityInterface
+     */
     protected $entity;
+    /**
+     * @var Repository The repository of the managed entity
+     */
     protected $repository;
 
+    /**
+     *
+     */
     public function init() {
         $this->repository = $this->em->getRepository($this->initRepositoryNS());
     }
 
+
     /**
-     * 
      * @param EntityManager $em
      */
     public function __construct(EntityManager $em) {
@@ -31,18 +43,32 @@ abstract class AbstractEntityManager implements EntityManagerInterface {
         $this->init();
     }
 
+    /**
+     * @return Repository
+     */
     public function getRepository() {
         return $this->repository;
     }
 
+    /**
+     * @return EntityManager
+     */
     public function getEm() {
         return $this->em;
     }
 
+    /**
+     * @return EntityInterface
+     */
     public function getEntity() {
         return $this->entity;
     }
 
+    /**
+     * @param $id
+     * @return EntityInterface
+     * @throws EntityNotFoundException
+     */
     public function find($id) {
         $this->entity = $this->repository->find($id);
         if (!$this->entity) {
@@ -51,6 +77,9 @@ abstract class AbstractEntityManager implements EntityManagerInterface {
         return $this->entity;
     }
 
+    /**
+     * @param EntityInterface $entity
+     */
     public function save(EntityInterface $entity) {
         $this->beforeSave($entity);
         $this->em->persist($entity);
@@ -58,6 +87,9 @@ abstract class AbstractEntityManager implements EntityManagerInterface {
         $this->afterSave($entity);
     }
 
+    /**
+     * @param EntityInterface $entity
+     */
     public function remove(EntityInterface $entity) {
         $this->beforeRemove($entity);
         $this->em->remove($entity);
