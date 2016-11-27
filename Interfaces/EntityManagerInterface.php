@@ -1,34 +1,96 @@
 <?php
-
+/**
+ * This file is part of the ArchitectBundle package.
+ *
+ * (c) mb-x <https://github.com/mb-x/architect-bundle>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
 namespace Mbx\ArchitectBundle\Interfaces;
 
 use Mbx\ArchitectBundle\Interfaces\EntityInterface;
+
 /**
- * Description of EntityManagerInterface
+ * Interface EntityManagerInterface
  *
  * @author Mohamed Bengrich <mbengrich.dev@gmail.com>
+ *
+ * @package Mbx\ArchitectBundle\Interfaces
  */
-interface EntityManagerInterface {
+interface EntityManagerInterface
+{
+
     /**
-     *
+     * @return mixed
      */
-     public function init();
+    public function init();
 
-     public function getRepository();
+    /**
+     * Retuns the repository of the managed entity
+     * @return Repository
+     */
+    public function getRepository();
 
-     public function initRepositoryNS();
-     
-     public function find($id);
+    /**
+     * Returns the repository namespace
+     *
+     * @return string
+     */
+    public function initRepositoryNS();
 
-     public function beforeSave(EntityInterface $entity);
-     
-     public function save(EntityInterface $entity);
+    /**
+     * Shortcut to find method of the repository
+     * @param $id
+     * @return mixed
+     */
+    public function find($id);
 
-     public function afterSave(EntityInterface $entity);
-     
-     public function remove(EntityInterface $entity);
+    /**
+     * Code to execute before saving the managed entity
+     *
+     * @param \Mbx\ArchitectBundle\Interfaces\EntityInterface $entity
+     * @return mixed
+     */
+    public function beforeSave(EntityInterface $entity);
 
-     public function beforeRemove(EntityInterface $entity);
+    /**
+     * Saves the managed entity
+     *
+     * @param \Mbx\ArchitectBundle\Interfaces\EntityInterface $entity
+     * @return mixed
+     */
+    public function save(EntityInterface $entity);
 
-     public function afterRemove(EntityInterface $entity);
+    /**
+     * Code to execute after saving the managed entity
+     *
+     * @param \Mbx\ArchitectBundle\Interfaces\EntityInterface $entity
+     * @return mixed
+     */
+    public function afterSave(EntityInterface $entity);
+
+    /**
+     * Removes the managed entity
+     *
+     * @param \Mbx\ArchitectBundle\Interfaces\EntityInterface $entity
+     * @return mixed
+     */
+    public function remove(EntityInterface $entity);
+
+    /**
+     * Code to execute before removing the managed entity
+     *
+     * @param \Mbx\ArchitectBundle\Interfaces\EntityInterface $entity
+     * @return mixed
+     */
+    public function beforeRemove(EntityInterface $entity);
+
+    /**
+     * Code to execute after removing the managed entity
+     *
+     * @param \Mbx\ArchitectBundle\Interfaces\EntityInterface $entity
+     * @return mixed
+     */
+    public function afterRemove(EntityInterface $entity);
 }

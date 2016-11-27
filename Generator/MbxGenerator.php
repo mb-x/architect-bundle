@@ -1,10 +1,23 @@
 <?php
+/**
+ * This file is part of the ArchitectBundle package.
+ *
+ * (c) mb-x <https://github.com/mb-x/architect-bundle>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
 namespace Mbx\ArchitectBundle\Generator;
 use Sensio\Bundle\GeneratorBundle\Generator\Generator;
 use Symfony\Component\HttpKernel\Bundle\BundleInterface;
 
+
 /**
+ * Class MbxGenerator
+ *
  * @author Mohamed Bengrich <mbengrich.dev@gmail.com>
+ *
+ * @package Mbx\ArchitectBundle\Generator
  */
 class MbxGenerator extends Generator
 {
@@ -17,7 +30,13 @@ class MbxGenerator extends Generator
      */
     private $classPath;
 
+    /**
+     * @var string
+     */
     private $entityName;
+    /**
+     * @var string
+     */
     private $bundle_namespace;
 
     public function __construct()
@@ -60,12 +79,21 @@ class MbxGenerator extends Generator
         return $this->bundle_namespace;
     }
 
+    /**
+     * @return string
+     */
     private function getManagerServiceName(){
         return strtolower($this->getBundleNamespace().'.'.$this->getEntityName()).'_manager';
     }
+    /**
+     * @return string
+     */
     private function getFormHandlerServiceName(){
         return strtolower($this->getBundleNamespace().'.'.$this->getEntityName()).'_form_handler';
     }
+    /**
+     * @return string
+     */
     public function getManagerServiceLines(){
         $lines =  sprintf(
             "%s:
@@ -76,6 +104,9 @@ class MbxGenerator extends Generator
             );
         return $lines;
     }
+    /**
+     * @return string
+     */
     public function getFormHandlerServiceLines(){
         $lines =  sprintf(
                 "%s:
@@ -96,6 +127,7 @@ class MbxGenerator extends Generator
      *
      * @param BundleInterface $bundle     The bundle in which to create the class
      * @param string          $entity     The entity relative class name
+     * @throws \RuntimeException
      */
     public function generateManager(BundleInterface $bundle, $entity)
     {
@@ -118,6 +150,13 @@ class MbxGenerator extends Generator
         ));
     }
 
+    /**
+     * Generates the FormHandler class if it does not exist.
+     *
+     * @param BundleInterface $bundle     The bundle in which to create the class
+     * @param string          $entity     The entity relative class name
+     * @throws \RuntimeException
+     */
     public function generateFormHandler(BundleInterface $bundle, $entity)
     {
         $parts = explode("\\", $entity);
