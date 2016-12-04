@@ -86,22 +86,24 @@ abstract class AbstractEntityManager implements EntityManagerInterface {
 
     /**
      * @param EntityInterface $entity
+     * @return mixed|void
      */
     public function save(EntityInterface $entity) {
-        $this->beforeSave($entity);
+        $extraVars = $this->beforeSave($entity);
         $this->em->persist($entity);
         $this->em->flush();
-        $this->afterSave($entity);
+        $this->afterSave($entity, $extraVars);
     }
 
     /**
      * @param EntityInterface $entity
+     * @return mixed|void
      */
     public function remove(EntityInterface $entity) {
-        $this->beforeRemove($entity);
+        $extraVars = $this->beforeRemove($entity);
         $this->em->remove($entity);
         $this->em->flush();
-        $this->afterRemove($entity);
+        $this->afterRemove($entity, $extraVars);
     }
 
 }
