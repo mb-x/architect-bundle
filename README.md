@@ -174,16 +174,16 @@ Your controller will contain less code because all the logic and operations will
 
 [Demo Application](https://github.com/mb-x/ArchitectBundleDemo)
 
-## 6. Suggestions 
+## 4. Suggestions 
 
 Much like every other piece of software `MbxArchitectBundle` is not perfect.
 I will appreciate any suggestion that can improve or add features to this bundle.
 
-## 7. Reporting an issue or a feature request
+## 5. Reporting an issue or a feature request
 
 Issues and feature requests are tracked in the [Github issue tracker](https://github.com/mb-x/architect-bundle/issues).
 
-## 8. Friendly License
+## 6. Friendly License
 
 This bundle is available under the MIT license. See the complete license in the bundle:
 
