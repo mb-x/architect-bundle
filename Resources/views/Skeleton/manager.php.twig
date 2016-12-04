@@ -33,7 +33,7 @@ class {{ entity_class }}Manager extends AbstractEntityManager
     public function beforeSave(EntityInterface $entity)
     {
         // TODO: Implement beforeSave() method.
-        return compact(array());
+        return array();
     }
 
     /**
@@ -58,7 +58,7 @@ class {{ entity_class }}Manager extends AbstractEntityManager
     public function beforeRemove(EntityInterface $entity)
     {
         // TODO: Implement beforeRemove() method.
-        return compact(array());
+        return array();
     }
 
     /**
@@ -68,7 +68,7 @@ class {{ entity_class }}Manager extends AbstractEntityManager
      * @param array $extraVars
      * @return mixed|void
      */
-    afterRemove(EntityInterface $entity, $extraVars = array())
+    public function afterRemove(EntityInterface $entity, $extraVars = array())
     {
         // TODO: Implement afterRemove() method.
         //extract($extraVars);
