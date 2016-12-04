@@ -6,7 +6,7 @@ This Bundle provides an architecture to separate the different job layers in you
 
 ### Prerequisites
 
-This bundle requires Symfony 2.7.x or 2.8.x (Not tested yet with Symfony 3)
+This bundle requires Symfony >= 2.7
 
 ### Step 1: Download ArchitectBundle using composer
 
