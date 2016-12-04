@@ -40,6 +40,7 @@ class {{ entity_class }}Manager extends AbstractEntityManager
      * Code to execute after saving the managed entity
      *
      * @param \Mbx\ArchitectBundle\Interfaces\EntityInterface $entity
+     * @param array $extraVars
      * @return mixed|void
      */
     public function afterSave(EntityInterface $entity, $extraVars = array())

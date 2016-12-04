@@ -37,21 +37,24 @@ class {{ entity_class }}FormHandler extends AbstractFormHandler
      * Code to execute before checking if form is submitted and valid
      *
      * @param \Mbx\ArchitectBundle\Interfaces\EntityInterface $entity
-     * @return mixed
+     * @return array
      */
     public function beforeCheckForm(EntityInterface $entity)
     {
         // TODO: Implement beforeCheckForm() method.
+        return compact(array());
     }
     /**
      * Code to execute after checking if form is submitted and valid
      *
      * @param \Mbx\ArchitectBundle\Interfaces\EntityInterface $entity
+     * @param array $extraVars
      * @return mixed
      */
-    public function afterCheckForm(EntityInterface $entity)
+    public function afterCheckForm(EntityInterface $entity, $extraVars = array())
     {
         // TODO: Implement afterCheckForm() method.
+        // extract($extraVars);
     }
     /**
      * Code to execute before checking if delete form is submitted and valid
@@ -62,16 +65,19 @@ class {{ entity_class }}FormHandler extends AbstractFormHandler
     public function beforeCheckDeleteForm(EntityInterface $entity)
     {
         // TODO: Implement beforeCheckDeleteForm() method.
+        return compact(array());
     }
     /**
      * Code to execute after checking if delete form is submitted and valid
      *
      * @param \Mbx\ArchitectBundle\Interfaces\EntityInterface $entity
+     * @param array $extraVars
      * @return mixed
      */
-    public function afterCheckDeleteForm(EntityInterface $entity)
+    public function afterCheckDeleteForm(EntityInterface $entity, $extraVars = array())
     {
         // TODO: Implement afterCheckDeleteForm() method.
+        // extract($extraVars);
     }
 {% endblock class_body %}
 }
