@@ -1,8 +1,8 @@
 {
   "name": "mb-x/architect-bundle",
   "type": "symfony-bundle",
-  "description": "Symfony MbxArchitectBundle",
-  "keywords": ["Utils"],
+  "description": "This Bundle provides an architecture to separate the different job layers in your Symfony application.",
+  "keywords": ["Symfony2","Symfony3", "design pattern","Utils", "Manager", "Form Handler"],
   "homepage": "https://github.com/mb-x/architect-bundle",
   "license": "MIT",
   "authors": [
@@ -12,7 +12,7 @@
     }
   ],
   "require": {
-    "php": ">=5.3.9",
+    "php": ">=5.4.0",
     "symfony/framework-bundle": ">=2.7",
     "twig/twig": "*",
     "doctrine/doctrine-bundle": "*"
