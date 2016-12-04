@@ -65,7 +65,7 @@ interface FormHandlerInterface
      * Code to execute before checking if form is submitted and valid
      *
      * @param \Mbx\ArchitectBundle\Interfaces\EntityInterface $entity
-     * @return mixed
+     * @return array
      */
     public function beforeCheckForm(EntityInterface $entity);
 
@@ -73,9 +73,10 @@ interface FormHandlerInterface
      * Code to execute after checking if form is submitted and valid
      *
      * @param \Mbx\ArchitectBundle\Interfaces\EntityInterface $entity
-     * @return mixed
+     * @param array $extraVars
+     * @return mixed|void
      */
-    public function afterCheckForm(EntityInterface $entity);
+    public function afterCheckForm(EntityInterface $entity, $extraVars = array());
 
     /**
      * Creates a form to delete a managed entity.
@@ -97,7 +98,7 @@ interface FormHandlerInterface
      * Code to execute before checking if delete form is submitted and valid
      *
      * @param \Mbx\ArchitectBundle\Interfaces\EntityInterface $entity
-     * @return mixed
+     * @return array
      */
     public function beforeCheckDeleteForm(EntityInterface $entity);
 
@@ -105,7 +106,8 @@ interface FormHandlerInterface
      * Code to execute after checking if delete form is submitted and valid
      *
      * @param \Mbx\ArchitectBundle\Interfaces\EntityInterface $entity
+     * @param array $extraVars
      * @return mixed
      */
-    public function afterCheckDeleteForm(EntityInterface $entity);
+    public function afterCheckDeleteForm(EntityInterface $entity, $extraVars = array());
 }

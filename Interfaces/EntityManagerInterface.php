@@ -50,7 +50,7 @@ interface EntityManagerInterface
      * Code to execute before saving the managed entity
      *
      * @param \Mbx\ArchitectBundle\Interfaces\EntityInterface $entity
-     * @return mixed
+     * @return array
      */
     public function beforeSave(EntityInterface $entity);
 
@@ -58,7 +58,7 @@ interface EntityManagerInterface
      * Saves the managed entity
      *
      * @param \Mbx\ArchitectBundle\Interfaces\EntityInterface $entity
-     * @return mixed
+     * @return mixed|void
      */
     public function save(EntityInterface $entity);
 
@@ -66,15 +66,16 @@ interface EntityManagerInterface
      * Code to execute after saving the managed entity
      *
      * @param \Mbx\ArchitectBundle\Interfaces\EntityInterface $entity
-     * @return mixed
+     * @param array $extraVars
+     * @return mixed|void
      */
-    public function afterSave(EntityInterface $entity);
+    public function afterSave(EntityInterface $entity, $extraVars = array());
 
     /**
      * Removes the managed entity
      *
      * @param \Mbx\ArchitectBundle\Interfaces\EntityInterface $entity
-     * @return mixed
+     * @return mixed|void
      */
     public function remove(EntityInterface $entity);
 
@@ -82,7 +83,7 @@ interface EntityManagerInterface
      * Code to execute before removing the managed entity
      *
      * @param \Mbx\ArchitectBundle\Interfaces\EntityInterface $entity
-     * @return mixed
+     * @return array
      */
     public function beforeRemove(EntityInterface $entity);
 
@@ -90,7 +91,8 @@ interface EntityManagerInterface
      * Code to execute after removing the managed entity
      *
      * @param \Mbx\ArchitectBundle\Interfaces\EntityInterface $entity
-     * @return mixed
+     * @param array $extraVars
+     * @return mixed|void
      */
-    public function afterRemove(EntityInterface $entity);
+    public function afterRemove(EntityInterface $entity, $extraVars = array());
 }

@@ -28,44 +28,50 @@ class {{ entity_class }}Manager extends AbstractEntityManager
      * Code to execute before saving the managed entity
      *
      * @param \Mbx\ArchitectBundle\Interfaces\EntityInterface $entity
-     * @return mixed
+     * @return array
      */
     public function beforeSave(EntityInterface $entity)
     {
         // TODO: Implement beforeSave() method.
+        return array();
     }
 
     /**
      * Code to execute after saving the managed entity
      *
      * @param \Mbx\ArchitectBundle\Interfaces\EntityInterface $entity
-     * @return mixed
+     * @param array $extraVars
+     * @return mixed|void
      */
-    public function afterSave(EntityInterface $entity)
+    public function afterSave(EntityInterface $entity, $extraVars = array())
     {
         // TODO: Implement afterSave() method.
+        //extract($extraVars);
     }
 
     /**
      * Code to execute before removing the managed entity
      *
      * @param \Mbx\ArchitectBundle\Interfaces\EntityInterface $entity
-     * @return mixed
+     * @return array
      */
     public function beforeRemove(EntityInterface $entity)
     {
         // TODO: Implement beforeRemove() method.
+        return array();
     }
 
     /**
      * Code to execute after removing the managed entity
      *
      * @param \Mbx\ArchitectBundle\Interfaces\EntityInterface $entity
-     * @return mixed
+     * @param array $extraVars
+     * @return mixed|void
      */
-    public function afterRemove(EntityInterface $entity)
+    public function afterRemove(EntityInterface $entity, $extraVars = array())
     {
         // TODO: Implement afterRemove() method.
+        //extract($extraVars);
     }
 {% endblock class_body %}
 }
