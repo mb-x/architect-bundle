@@ -112,8 +112,7 @@ class MbxGenerator extends Generator
                 "%s:
                 class: %s
                 parent: mbx.abstract_form_handler
-                arguments: ['@%s']
-                scope: request"
+                arguments: ['@%s']"
                 ,
                 $this->getFormHandlerServiceName(),
                 $this->getBundleNamespace().'\\'.'FormHandler'.'\\'.$this->getClassName(),
