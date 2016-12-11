@@ -95,10 +95,7 @@ class MbxGenerator extends Generator
      * @return string
      */
     public function getManagerServiceLines(){
-        $lines =  sprintf(
-            "%s:
-                class: %s
-                parent: mbx.abstract_entity_manager",
+        $lines =  sprintf("%s:\n    class: %s\n    parent: mbx.abstract_entity_manager",
             $this->getManagerServiceName(),
             $this->getBundleNamespace().'\\'.'Manager'.'\\'.$this->getClassName()
             );
@@ -108,12 +105,7 @@ class MbxGenerator extends Generator
      * @return string
      */
     public function getFormHandlerServiceLines(){
-        $lines =  sprintf(
-                "%s:
-                class: %s
-                parent: mbx.abstract_form_handler
-                arguments: ['@%s']"
-                ,
+        $lines =  sprintf("%s:\n    class: %s\n    parent: mbx.abstract_form_handler\n    arguments: ['@%s']",
                 $this->getFormHandlerServiceName(),
                 $this->getBundleNamespace().'\\'.'FormHandler'.'\\'.$this->getClassName(),
                 $this->getManagerServiceName()

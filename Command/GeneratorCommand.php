@@ -73,9 +73,9 @@ class GeneratorCommand extends ContainerAwareCommand
         $output->writeln($classType);
         $generator = $this->getGenerator($bundle);
         if($classType == self::ManagerType || $classType==self::AllType){ /*Manager block*/
-            $output->writeln('---------------------------------------');
-            $output->writeln('|     Generating Class Manager ...     |');
-            $output->writeln('---------------------------------------');
+            $output->writeln('<comment>---------------------------------------</comment>');
+            $output->writeln('<comment>|     Generating Class Manager ...     |</comment>');
+            $output->writeln('<comment>---------------------------------------</comment>');
             $generator->generateManager($bundle, $entity, $force);
             $output->writeln(
                 sprintf(
@@ -84,15 +84,15 @@ class GeneratorCommand extends ContainerAwareCommand
                     $generator->getClassPath()
                 )
             );
-            $output->writeln('---------------------------------------');
-            $output->writeln('Add the following lines to your services.yml file:');
+            $output->writeln('<info>---------------------------------------</info>');
+            $output->writeln('<info>Add the following lines to your services.yml file:</info>');
             $output->writeln($generator->getManagerServiceLines());
-            $output->writeln('---------------------------------------');
+            $output->writeln('<info>---------------------------------------</info>');
         }
         if($classType == self::FormHandlerType || $classType==self::AllType) {/*FormHandler block*/
-            $output->writeln('---------------------------------------');
-            $output->writeln('|   Generating Class FormHandler ...   |');
-            $output->writeln('---------------------------------------');
+            $output->writeln('<comment>---------------------------------------</comment>');
+            $output->writeln('<comment>|   Generating Class FormHandler ...   |</comment>');
+            $output->writeln('<comment>---------------------------------------</comment>');
             $generator->generateFormHandler($bundle, $entity, $force);
             $output->writeln(
                 sprintf(
@@ -101,10 +101,10 @@ class GeneratorCommand extends ContainerAwareCommand
                     $generator->getClassPath()
                 )
             );
-            $output->writeln('---------------------------------------');
-            $output->writeln('Add the following lines to your services.yml file:');
+            $output->writeln('<info>---------------------------------------</info>');
+            $output->writeln('<info>Add the following lines to your services.yml file:</info>');
             $output->writeln($generator->getFormHandlerServiceLines());
-            $output->writeln('---------------------------------------');
+            $output->writeln('<info>---------------------------------------</info>');
         }
     }
     /**
