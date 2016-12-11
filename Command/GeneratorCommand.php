@@ -51,6 +51,7 @@ class GeneratorCommand extends ContainerAwareCommand
             ->setDescription('Generates a new Manager and FormHandler classes based on the given entity.')
             ->addArgument('entity', InputArgument::REQUIRED, 'The entity class name (shortcut notation).')
             ->addOption('classType', 'c', InputOption::VALUE_OPTIONAL,'The class type to be generated ('.self::ManagerType.'|'.self::FormHandlerType.'|'.self::AllType.')',self::AllType)
+            ->addOption('force', 'f', InputOption::VALUE_OPTIONAL,'Force generating.', false)
         ;
     }
 
@@ -68,16 +69,17 @@ class GeneratorCommand extends ContainerAwareCommand
 //        $output->writeln($bundle->getNamespace());
 //        $output->writeln($bundle->getPath());
         $classType = $input->getOption('classType');
+        $force = $input->getOption('force');
         $output->writeln($classType);
         $generator = $this->getGenerator($bundle);
         if($classType == self::ManagerType || $classType==self::AllType){ /*Manager block*/
             $output->writeln('---------------------------------------');
             $output->writeln('|     Generating Class Manager ...     |');
             $output->writeln('---------------------------------------');
-            $generator->generateManager($bundle, $entity);
+            $generator->generateManager($bundle, $entity, $force);
             $output->writeln(
                 sprintf(
-                    'The new Manager %s.php class file has been created under %s.',
+                    'The new Manager %s.php class file has been saved under %s.',
                     $generator->getClassName(),
                     $generator->getClassPath()
                 )
@@ -91,10 +93,10 @@ class GeneratorCommand extends ContainerAwareCommand
             $output->writeln('---------------------------------------');
             $output->writeln('|   Generating Class FormHandler ...   |');
             $output->writeln('---------------------------------------');
-            $generator->generateFormHandler($bundle, $entity);
+            $generator->generateFormHandler($bundle, $entity, $force);
             $output->writeln(
                 sprintf(
-                    'The new FormHandler %s.php class file has been created under %s.',
+                    'The new FormHandler %s.php class file has been saved under %s.',
                     $generator->getClassName(),
                     $generator->getClassPath()
                 )
