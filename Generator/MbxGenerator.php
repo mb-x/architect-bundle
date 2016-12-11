@@ -95,10 +95,7 @@ class MbxGenerator extends Generator
      * @return string
      */
     public function getManagerServiceLines(){
-        $lines =  sprintf(
-            "%s:
-                class: %s
-                parent: mbx.abstract_entity_manager",
+        $lines =  sprintf("%s:\n    class: %s\n    parent: mbx.abstract_entity_manager",
             $this->getManagerServiceName(),
             $this->getBundleNamespace().'\\'.'Manager'.'\\'.$this->getClassName()
             );
@@ -108,13 +105,7 @@ class MbxGenerator extends Generator
      * @return string
      */
     public function getFormHandlerServiceLines(){
-        $lines =  sprintf(
-                "%s:
-                class: %s
-                parent: mbx.abstract_form_handler
-                arguments: ['@%s']
-                scope: request"
-                ,
+        $lines =  sprintf("%s:\n    class: %s\n    parent: mbx.abstract_form_handler\n    arguments: ['@%s']",
                 $this->getFormHandlerServiceName(),
                 $this->getBundleNamespace().'\\'.'FormHandler'.'\\'.$this->getClassName(),
                 $this->getManagerServiceName()
@@ -125,11 +116,11 @@ class MbxGenerator extends Generator
     /**
      * Generates the Manager class if it does not exist.
      *
-     * @param BundleInterface $bundle     The bundle in which to create the class
-     * @param string          $entity     The entity relative class name
-     * @throws \RuntimeException
+     * @param BundleInterface $bundle The bundle in which to create the class
+     * @param string $entity The entity relative class name
+     * @param bool $force
      */
-    public function generateManager(BundleInterface $bundle, $entity)
+    public function generateManager(BundleInterface $bundle, $entity, $force=false)
     {
         $parts = explode("\\", $entity);
         $entityClass = array_pop($parts);
@@ -138,8 +129,8 @@ class MbxGenerator extends Generator
         $this->bundle_namespace = $bundle->getNamespace();
         $dirPath = $bundle->getPath() . '/Manager';
         $this->classPath = $dirPath . '/' . str_replace('\\', '/', $entity) . 'Manager.php';
-        if (file_exists($this->classPath)) {
-            throw new \RuntimeException(sprintf('Unable to generate the %s Manager class as it already exists under the %s file', $this->className, $this->classPath));
+        if (!$force && file_exists($this->classPath)) {
+            throw new \RuntimeException(sprintf("Unable to generate the %s Manager class as it already exists under the %s file\nUse the option \"-f true\" if you want to force generating", $this->className, $this->classPath));
         }
         $parts = explode('\\', $entity);
         array_pop($parts);
@@ -153,11 +144,11 @@ class MbxGenerator extends Generator
     /**
      * Generates the FormHandler class if it does not exist.
      *
-     * @param BundleInterface $bundle     The bundle in which to create the class
-     * @param string          $entity     The entity relative class name
-     * @throws \RuntimeException
+     * @param BundleInterface $bundle The bundle in which to create the class
+     * @param string $entity The entity relative class name
+     * @param bool $force
      */
-    public function generateFormHandler(BundleInterface $bundle, $entity)
+    public function generateFormHandler(BundleInterface $bundle, $entity, $force = false)
     {
         $parts = explode("\\", $entity);
         $entityClass = array_pop($parts);
@@ -165,8 +156,8 @@ class MbxGenerator extends Generator
         $this->bundle_namespace = $bundle->getNamespace();
         $dirPath = $bundle->getPath() . '/FormHandler';
         $this->classPath = $dirPath . '/' . str_replace('\\', '/', $entity) . 'FormHandler.php';
-        if (file_exists($this->classPath)) {
-            throw new \RuntimeException(sprintf('Unable to generate the %s FormHandler class as it already exists under the %s file', $this->className, $this->classPath));
+        if (!$force && file_exists($this->classPath)) {
+            throw new \RuntimeException(sprintf("Unable to generate the %s FormHandler class as it already exists under the %s file\nUse the option \"-f true\" if you want to force generating", $this->className, $this->classPath));
         }
         $parts = explode('\\', $entity);
         array_pop($parts);

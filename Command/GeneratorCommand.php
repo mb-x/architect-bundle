@@ -51,6 +51,7 @@ class GeneratorCommand extends ContainerAwareCommand
             ->setDescription('Generates a new Manager and FormHandler classes based on the given entity.')
             ->addArgument('entity', InputArgument::REQUIRED, 'The entity class name (shortcut notation).')
             ->addOption('classType', 'c', InputOption::VALUE_OPTIONAL,'The class type to be generated ('.self::ManagerType.'|'.self::FormHandlerType.'|'.self::AllType.')',self::AllType)
+            ->addOption('force', 'f', InputOption::VALUE_OPTIONAL,'Force generating.', false)
         ;
     }
 
@@ -68,41 +69,42 @@ class GeneratorCommand extends ContainerAwareCommand
 //        $output->writeln($bundle->getNamespace());
 //        $output->writeln($bundle->getPath());
         $classType = $input->getOption('classType');
+        $force = $input->getOption('force');
         $output->writeln($classType);
         $generator = $this->getGenerator($bundle);
         if($classType == self::ManagerType || $classType==self::AllType){ /*Manager block*/
-            $output->writeln('---------------------------------------');
-            $output->writeln('|     Generating Class Manager ...     |');
-            $output->writeln('---------------------------------------');
-            $generator->generateManager($bundle, $entity);
+            $output->writeln('<comment>---------------------------------------</comment>');
+            $output->writeln('<comment>|     Generating Class Manager ...     |</comment>');
+            $output->writeln('<comment>---------------------------------------</comment>');
+            $generator->generateManager($bundle, $entity, $force);
             $output->writeln(
                 sprintf(
-                    'The new Manager %s.php class file has been created under %s.',
+                    'The new Manager %s.php class file has been saved under %s.',
                     $generator->getClassName(),
                     $generator->getClassPath()
                 )
             );
-            $output->writeln('---------------------------------------');
-            $output->writeln('Add the following lines to your services.yml file:');
+            $output->writeln('<info>---------------------------------------</info>');
+            $output->writeln('<info>Add the following lines to your services.yml file:</info>');
             $output->writeln($generator->getManagerServiceLines());
-            $output->writeln('---------------------------------------');
+            $output->writeln('<info>---------------------------------------</info>');
         }
         if($classType == self::FormHandlerType || $classType==self::AllType) {/*FormHandler block*/
-            $output->writeln('---------------------------------------');
-            $output->writeln('|   Generating Class FormHandler ...   |');
-            $output->writeln('---------------------------------------');
-            $generator->generateFormHandler($bundle, $entity);
+            $output->writeln('<comment>---------------------------------------</comment>');
+            $output->writeln('<comment>|   Generating Class FormHandler ...   |</comment>');
+            $output->writeln('<comment>---------------------------------------</comment>');
+            $generator->generateFormHandler($bundle, $entity, $force);
             $output->writeln(
                 sprintf(
-                    'The new FormHandler %s.php class file has been created under %s.',
+                    'The new FormHandler %s.php class file has been saved under %s.',
                     $generator->getClassName(),
                     $generator->getClassPath()
                 )
             );
-            $output->writeln('---------------------------------------');
-            $output->writeln('Add the following lines to your services.yml file:');
+            $output->writeln('<info>---------------------------------------</info>');
+            $output->writeln('<info>Add the following lines to your services.yml file:</info>');
             $output->writeln($generator->getFormHandlerServiceLines());
-            $output->writeln('---------------------------------------');
+            $output->writeln('<info>---------------------------------------</info>');
         }
     }
     /**

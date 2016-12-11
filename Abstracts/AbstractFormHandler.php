@@ -11,7 +11,7 @@ namespace Mbx\ArchitectBundle\Abstracts;
 
 use Mbx\ArchitectBundle\Exception\NotStringException;
 use Symfony\Component\Form\FormFactory;
-use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Routing\Router;
 use Mbx\ArchitectBundle\Interfaces\FormHandlerInterface;
 use Mbx\ArchitectBundle\Interfaces\EntityInterface;
@@ -28,9 +28,9 @@ abstract class AbstractFormHandler implements FormHandlerInterface {
      */
     protected $formFactory;
     /**
-     * @var Request
+     * @var RequestStack
      */
-    protected $request;
+    protected $requestStack;
     /**
      * @var FormType The FormType of the managed entity
      */
@@ -71,14 +71,14 @@ abstract class AbstractFormHandler implements FormHandlerInterface {
 
     /**
      * @param FormFactory $formFactory
-     * @param Request $request
+     * @param RequestStack $requestStack
      * @param Router $router
      * @param \Mbx\ArchitectBundle\Abstracts\AbstractEntityManager $manager
      * @throws NotStringException
      */
-    public function __construct(FormFactory $formFactory, Request $request, Router $router, AbstractEntityManager $manager) {
+    public function __construct(FormFactory $formFactory, RequestStack $requestStack, Router $router, AbstractEntityManager $manager) {
         $this->formFactory = $formFactory;
-        $this->request = $request;
+        $this->requestStack = $requestStack;
         $this->router = $router;
         $this->manager = $manager;
         $this->init();
@@ -100,7 +100,7 @@ abstract class AbstractFormHandler implements FormHandlerInterface {
      */
     public function processForm(EntityInterface $entity) {
         $this->createForm($entity);
-        $this->form->handleRequest($this->request);
+        $this->form->handleRequest($this->requestStack->getCurrentRequest());
         $extraVars = $this->beforeCheckForm($entity);
         if ($this->form->isSubmitted() && $this->form->isValid()) {
             $this->afterCheckForm($entity, $extraVars);
@@ -119,7 +119,7 @@ abstract class AbstractFormHandler implements FormHandlerInterface {
      */
     public function processDeleteForm(EntityInterface $entity) {
         $form = $this->createDeleteForm($entity);
-        $form->handleRequest($this->request);
+        $form->handleRequest($this->requestStack->getCurrentRequest());
         $extraVars = $this->beforeCheckDeleteForm($entity);
         if ($form->isSubmitted() && $form->isValid()) {
             $this->afterCheckDeleteForm($entity, $extraVars);

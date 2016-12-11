@@ -4,9 +4,7 @@ This Bundle provides an architecture to separate the different job layers in you
 
 ## 1. Installation
 
-### Prerequisites
-
-This bundle requires Symfony >= 2.7
+This bundle was tested with Symfony 2.8.14 and Symfony 3.0.9
 
 ### Step 1: Download ArchitectBundle using composer
 
@@ -76,7 +74,6 @@ appbundle.post_form_handler:
     class: AppBundle\FormHandler\PostFormHandler
     parent: mbx.abstract_form_handler
     arguments: ['@appbundle.post_manager']
-    scope: request
 ```
 ### Step 4: The controller
 
@@ -177,7 +174,7 @@ Your controller will contain less code because all the logic and operations will
 ## 4. Suggestions 
 
 Much like every other piece of software `MbxArchitectBundle` is not perfect.
-I will appreciate any suggestion that can improve or add features to this bundle.
+Any suggestion that can improve or add features to this bundle is appreciated.
 
 ## 5. Reporting an issue or a feature request
 

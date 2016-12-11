@@ -9,7 +9,7 @@ services:
         arguments: ['@doctrine.orm.entity_manager']
     mbx.abstract_form_handler:
         abstract: true
-        arguments: ['@form.factory', '@request', '@router']
+        arguments: ['@form.factory', '@request_stack', '@router']
     mbx.twig_extension:
         class: '%mbx.twig_extension.class%'
         arguments: ['@service_container']
