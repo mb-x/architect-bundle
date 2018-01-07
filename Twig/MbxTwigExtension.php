@@ -20,23 +20,23 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  */
 class MbxTwigExtension extends \Twig_Extension
 {
-
     protected $twig;
     protected $container;
 
-    public function __construct(ContainerInterface $container) {
-
+    public function __construct(ContainerInterface $container)
+    {
         $this->container = $container;
-
     }
 
-    public function getFunctions() {
+    public function getFunctions()
+    {
         return array(
             new \Twig_SimpleFunction('renderBsDeleteModal', array($this, 'renderBsDeleteModal'), array('is_safe' => array('html'))),
         );
     }
 
-    public function renderBsDeleteModal($delete_form, $options = array()) {
+    public function renderBsDeleteModal($delete_form, $options = array())
+    {
         $this->twig = $this->container->get('templating');
         return $this->twig->render('@MbxSymfonyBootstrap/Bootstrap/modalBsDeleteForm.html.twig', array(
             'delete_form'=> $delete_form,
@@ -44,9 +44,8 @@ class MbxTwigExtension extends \Twig_Extension
         ));
     }
 
-    public function getName() {
+    public function getName()
+    {
         return 'mbx_twig_extension';
     }
-
-
 }

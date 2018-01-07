@@ -8,9 +8,9 @@
  * file that was distributed with this source code.
  */
 namespace Mbx\ArchitectBundle\Generator;
+
 use Sensio\Bundle\GeneratorBundle\Generator\Generator;
 use Symfony\Component\HttpKernel\Bundle\BundleInterface;
-
 
 /**
  * Class MbxGenerator
@@ -82,20 +82,24 @@ class MbxGenerator extends Generator
     /**
      * @return string
      */
-    private function getManagerServiceName(){
+    private function getManagerServiceName()
+    {
         return strtolower($this->getBundleNamespace().'.'.$this->getEntityName()).'_manager';
     }
     /**
      * @return string
      */
-    private function getFormHandlerServiceName(){
+    private function getFormHandlerServiceName()
+    {
         return strtolower($this->getBundleNamespace().'.'.$this->getEntityName()).'_form_handler';
     }
     /**
      * @return string
      */
-    public function getManagerServiceLines(){
-        $lines =  sprintf("%s:\n    class: %s\n    parent: mbx.abstract_entity_manager",
+    public function getManagerServiceLines()
+    {
+        $lines =  sprintf(
+            "%s:\n    class: %s\n    parent: mbx.abstract_entity_manager",
             $this->getManagerServiceName(),
             $this->getBundleNamespace().'\\'.'Manager'.'\\'.$this->getClassName()
             );
@@ -104,8 +108,10 @@ class MbxGenerator extends Generator
     /**
      * @return string
      */
-    public function getFormHandlerServiceLines(){
-        $lines =  sprintf("%s:\n    class: %s\n    parent: mbx.abstract_form_handler\n    arguments: ['@%s']",
+    public function getFormHandlerServiceLines()
+    {
+        $lines =  sprintf(
+            "%s:\n    class: %s\n    parent: mbx.abstract_form_handler\n    arguments: ['@%s']",
                 $this->getFormHandlerServiceName(),
                 $this->getBundleNamespace().'\\'.'FormHandler'.'\\'.$this->getClassName(),
                 $this->getManagerServiceName()
@@ -167,5 +173,4 @@ class MbxGenerator extends Generator
             'entity_class' => $entityClass,
         ));
     }
-
 }

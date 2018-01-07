@@ -16,7 +16,8 @@ namespace Mbx\ArchitectBundle\Interfaces;
  *
  * @package Mbx\ArchitectBundle\Interfaces
  */
-interface EntityInterface {
+interface EntityInterface
+{
 
     /**
      * @return mixed

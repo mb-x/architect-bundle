@@ -23,7 +23,6 @@ use Symfony\Component\HttpKernel\Bundle\BundleInterface;
  */
 class GeneratorCommand extends ContainerAwareCommand
 {
-
     const FormHandlerType = 'FormHandler';
     const ManagerType = 'Manager';
     const AllType = 'All';
@@ -50,8 +49,8 @@ class GeneratorCommand extends ContainerAwareCommand
             ->setName('mbx:generate')
             ->setDescription('Generates a new Manager and FormHandler classes based on the given entity.')
             ->addArgument('entity', InputArgument::REQUIRED, 'The entity class name (shortcut notation).')
-            ->addOption('classType', 'c', InputOption::VALUE_OPTIONAL,'The class type to be generated ('.self::ManagerType.'|'.self::FormHandlerType.'|'.self::AllType.')',self::AllType)
-            ->addOption('force', 'f', InputOption::VALUE_OPTIONAL,'Force generating.', false)
+            ->addOption('classType', 'c', InputOption::VALUE_OPTIONAL, 'The class type to be generated ('.self::ManagerType.'|'.self::FormHandlerType.'|'.self::AllType.')', self::AllType)
+            ->addOption('force', 'f', InputOption::VALUE_OPTIONAL, 'Force generating.', false)
         ;
     }
 
@@ -72,7 +71,7 @@ class GeneratorCommand extends ContainerAwareCommand
         $force = $input->getOption('force');
         $output->writeln($classType);
         $generator = $this->getGenerator($bundle);
-        if($classType == self::ManagerType || $classType==self::AllType){ /*Manager block*/
+        if ($classType == self::ManagerType || $classType==self::AllType) { /*Manager block*/
             $output->writeln('<comment>---------------------------------------</comment>');
             $output->writeln('<comment>|     Generating Class Manager ...     |</comment>');
             $output->writeln('<comment>---------------------------------------</comment>');
@@ -89,7 +88,7 @@ class GeneratorCommand extends ContainerAwareCommand
             $output->writeln($generator->getManagerServiceLines());
             $output->writeln('<info>---------------------------------------</info>');
         }
-        if($classType == self::FormHandlerType || $classType==self::AllType) {/*FormHandler block*/
+        if ($classType == self::FormHandlerType || $classType==self::AllType) {/*FormHandler block*/
             $output->writeln('<comment>---------------------------------------</comment>');
             $output->writeln('<comment>|   Generating Class FormHandler ...   |</comment>');
             $output->writeln('<comment>---------------------------------------</comment>');
@@ -169,5 +168,4 @@ class GeneratorCommand extends ContainerAwareCommand
         }
         return $this->generator;
     }
-
 }

@@ -16,12 +16,14 @@ use Symfony\Component\Routing\Router;
 use Mbx\ArchitectBundle\Interfaces\FormHandlerInterface;
 use Mbx\ArchitectBundle\Interfaces\EntityInterface;
 use Mbx\ArchitectBundle\Abstracts\AbstractEntityManager;
+
 /**
  * Abstract form handler
  *
  * @author Mohamed Bengrich <mbengrich.dev@gmail.com>
  */
-abstract class AbstractFormHandler implements FormHandlerInterface {
+abstract class AbstractFormHandler implements FormHandlerInterface
+{
 
     /**
      * @var FormFactory
@@ -57,13 +59,14 @@ abstract class AbstractFormHandler implements FormHandlerInterface {
     /**
      * @throws NotStringException
      */
-    public function init() {
+    public function init()
+    {
         $this->deleteRouteName =  $this->initDeleteRouteName();
         $this->formTypeNS = $this->initFormTypeNS();
-        if(!trim($this->deleteRouteName) || !is_string($this->initDeleteRouteName())){
+        if (!trim($this->deleteRouteName) || !is_string($this->initDeleteRouteName())) {
             throw new NotStringException('Delete Route Name');
         }
-        if(!trim($this->formTypeNS) || !is_string($this->initFormTypeNS())){
+        if (!trim($this->formTypeNS) || !is_string($this->initFormTypeNS())) {
             throw new NotStringException('Form Type Namespace');
         }
     }
@@ -76,7 +79,8 @@ abstract class AbstractFormHandler implements FormHandlerInterface {
      * @param \Mbx\ArchitectBundle\Abstracts\AbstractEntityManager $manager
      * @throws NotStringException
      */
-    public function __construct(FormFactory $formFactory, RequestStack $requestStack, Router $router, AbstractEntityManager $manager) {
+    public function __construct(FormFactory $formFactory, RequestStack $requestStack, Router $router, AbstractEntityManager $manager)
+    {
         $this->formFactory = $formFactory;
         $this->requestStack = $requestStack;
         $this->router = $router;
@@ -88,7 +92,8 @@ abstract class AbstractFormHandler implements FormHandlerInterface {
     /**
      * @return FormType
      */
-    public function getForm() {
+    public function getForm()
+    {
         return $this->form;
     }
 
@@ -98,16 +103,18 @@ abstract class AbstractFormHandler implements FormHandlerInterface {
      * @param EntityInterface $entity
      * @return bool
      */
-    public function processForm(EntityInterface $entity) {
+    public function processForm(EntityInterface $entity)
+    {
+        $extraVars = $this->beforeCheckForm($entity);
         $this->createForm($entity);
         $this->form->handleRequest($this->requestStack->getCurrentRequest());
-        $extraVars = $this->beforeCheckForm($entity);
+
         if ($this->form->isSubmitted() && $this->form->isValid()) {
             $this->afterCheckForm($entity, $extraVars);
             $this->manager->save($entity);
             return true;
         }
-        return FALSE;
+        return false;
     }
 
 
@@ -117,7 +124,8 @@ abstract class AbstractFormHandler implements FormHandlerInterface {
      * @param EntityInterface $entity
      * @return bool
      */
-    public function processDeleteForm(EntityInterface $entity) {
+    public function processDeleteForm(EntityInterface $entity)
+    {
         $form = $this->createDeleteForm($entity);
         $form->handleRequest($this->requestStack->getCurrentRequest());
         $extraVars = $this->beforeCheckDeleteForm($entity);
@@ -126,7 +134,7 @@ abstract class AbstractFormHandler implements FormHandlerInterface {
             $this->manager->remove($entity);
             return true;
         }
-        return FALSE;
+        return false;
     }
 
 
@@ -135,7 +143,8 @@ abstract class AbstractFormHandler implements FormHandlerInterface {
      *
      * @param EntityInterface $entity
      */
-    public function createForm(EntityInterface $entity) {
+    public function createForm(EntityInterface $entity)
+    {
         $this->form = $this->formFactory->create($this->formTypeNS, $entity);
     }
 
@@ -145,12 +154,12 @@ abstract class AbstractFormHandler implements FormHandlerInterface {
      * @param EntityInterface $entity
      * @return mixed
      */
-    public function createDeleteForm(EntityInterface $entity) {
+    public function createDeleteForm(EntityInterface $entity)
+    {
         return $this->formFactory->createBuilder()
                         ->setAction($this->router->generate($this->deleteRouteName, array('id' => $entity->getId())))
                         ->setMethod('DELETE')
                         ->getForm()
         ;
     }
-
 }

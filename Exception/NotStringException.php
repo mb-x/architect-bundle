@@ -9,7 +9,6 @@
  */
 namespace Mbx\ArchitectBundle\Exception;
 
-
 /**
  * Class NotStringException
  *
@@ -33,7 +32,8 @@ class NotStringException extends \Exception
     /**
      * @return string
      */
-    public function __toString() {
+    public function __toString()
+    {
         return __CLASS__ . ": [{$this->code}]: {$this->message}\n";
     }
 }

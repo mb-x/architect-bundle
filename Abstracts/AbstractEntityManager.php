@@ -19,7 +19,8 @@ use Mbx\ArchitectBundle\Interfaces\EntityInterface;
  *
  * @author Mohamed Bengrich <mbengrich.dev@gmail.com>
  */
-abstract class AbstractEntityManager implements EntityManagerInterface {
+abstract class AbstractEntityManager implements EntityManagerInterface
+{
 
     /**
      * @var \Doctrine\ORM\EntityManager
@@ -37,7 +38,8 @@ abstract class AbstractEntityManager implements EntityManagerInterface {
     /**
      *
      */
-    public function init() {
+    public function init()
+    {
         $this->repository = $this->em->getRepository($this->initRepositoryNS());
     }
 
@@ -45,7 +47,8 @@ abstract class AbstractEntityManager implements EntityManagerInterface {
     /**
      * @param EntityManager $em
      */
-    public function __construct(EntityManager $em) {
+    public function __construct(EntityManager $em)
+    {
         $this->em = $em;
         $this->init();
     }
@@ -53,21 +56,24 @@ abstract class AbstractEntityManager implements EntityManagerInterface {
     /**
      * @return Repository
      */
-    public function getRepository() {
+    public function getRepository()
+    {
         return $this->repository;
     }
 
     /**
      * @return EntityManager
      */
-    public function getEm() {
+    public function getEm()
+    {
         return $this->em;
     }
 
     /**
      * @return EntityInterface
      */
-    public function getEntity() {
+    public function getEntity()
+    {
         return $this->entity;
     }
 
@@ -76,7 +82,8 @@ abstract class AbstractEntityManager implements EntityManagerInterface {
      * @return EntityInterface
      * @throws EntityNotFoundException
      */
-    public function find($id) {
+    public function find($id)
+    {
         $this->entity = $this->repository->find($id);
         if (!$this->entity) {
             throw new EntityNotFoundException();
@@ -88,7 +95,8 @@ abstract class AbstractEntityManager implements EntityManagerInterface {
      * @param EntityInterface $entity
      * @return mixed|void
      */
-    public function save(EntityInterface $entity) {
+    public function save(EntityInterface $entity)
+    {
         $extraVars = $this->beforeSave($entity);
         $this->em->persist($entity);
         $this->em->flush();
@@ -99,11 +107,11 @@ abstract class AbstractEntityManager implements EntityManagerInterface {
      * @param EntityInterface $entity
      * @return mixed|void
      */
-    public function remove(EntityInterface $entity) {
+    public function remove(EntityInterface $entity)
+    {
         $extraVars = $this->beforeRemove($entity);
         $this->em->remove($entity);
         $this->em->flush();
         $this->afterRemove($entity, $extraVars);
     }
-
 }
