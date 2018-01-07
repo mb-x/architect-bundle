@@ -7,15 +7,17 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-namespace Mbx\ArchitectBundle\Abstracts;
+namespace Mbx\ArchitectBundle\FormHandler;
 
+use Mbx\ArchitectBundle\EntityManager\AbstractEntityManager;
+use Mbx\ArchitectBundle\Event\FormHandlerEvents;
+use Mbx\ArchitectBundle\Event\FormHandlerPreCreate;
 use Mbx\ArchitectBundle\Exception\NotStringException;
+use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\Form\FormFactory;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Routing\Router;
-use Mbx\ArchitectBundle\Interfaces\FormHandlerInterface;
 use Mbx\ArchitectBundle\Interfaces\EntityInterface;
-use Mbx\ArchitectBundle\Abstracts\AbstractEntityManager;
 
 /**
  * Abstract form handler
@@ -24,6 +26,11 @@ use Mbx\ArchitectBundle\Abstracts\AbstractEntityManager;
  */
 abstract class AbstractFormHandler implements FormHandlerInterface
 {
+
+    /**
+     * @var EventDispatcherInterface
+     */
+    protected $eventDispatcher;
 
     /**
      * @var FormFactory
@@ -76,15 +83,23 @@ abstract class AbstractFormHandler implements FormHandlerInterface
      * @param FormFactory $formFactory
      * @param RequestStack $requestStack
      * @param Router $router
-     * @param \Mbx\ArchitectBundle\Abstracts\AbstractEntityManager $manager
+     * @param \Mbx\ArchitectBundle\EntityManager\AbstractEntityManager $manager
+     * @param EventDispatcherInterface $eventDispatcher
      * @throws NotStringException
      */
-    public function __construct(FormFactory $formFactory, RequestStack $requestStack, Router $router, AbstractEntityManager $manager)
+    public function __construct(
+        FormFactory $formFactory,
+        RequestStack $requestStack,
+        Router $router,
+        AbstractEntityManager $manager,
+        EventDispatcher $eventDispatcher
+    )
     {
         $this->formFactory = $formFactory;
         $this->requestStack = $requestStack;
         $this->router = $router;
         $this->manager = $manager;
+        $this->eventDispatcher = $eventDispatcher;
         $this->init();
     }
 
@@ -105,12 +120,21 @@ abstract class AbstractFormHandler implements FormHandlerInterface
      */
     public function processForm(EntityInterface $entity)
     {
-        $extraVars = $this->beforeCheckForm($entity);
+        /* PreFormCreate */
+        $formEvents = new FormHandlerEvents($entity);
+        $this->eventDispatcher->dispatch(FormHandlerEvents::PRE_CREATE, $formEvents);
+
         $this->createForm($entity);
+        $this->eventDispatcher->dispatch(FormHandlerEvents::POST_CREATE, $formEvents);
+
         $this->form->handleRequest($this->requestStack->getCurrentRequest());
 
+        $this->eventDispatcher->dispatch(FormHandlerEvents::PRE_VALID, $formEvents);
+
         if ($this->form->isSubmitted() && $this->form->isValid()) {
-            $this->afterCheckForm($entity, $extraVars);
+
+            $this->eventDispatcher->dispatch(FormHandlerEvents::POST_VALID, $formEvents);
+
             $this->manager->save($entity);
             return true;
         }

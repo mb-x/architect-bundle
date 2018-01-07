@@ -7,7 +7,7 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-namespace Mbx\ArchitectBundle\Interfaces;
+namespace Mbx\ArchitectBundle\FormHandler;
 
 use Mbx\ArchitectBundle\Interfaces\EntityInterface;
 
@@ -61,22 +61,6 @@ interface FormHandlerInterface
      */
     public function createForm(EntityInterface $entity);
 
-    /**
-     * Code to execute before checking if form is submitted and valid
-     *
-     * @param \Mbx\ArchitectBundle\Interfaces\EntityInterface $entity
-     * @return array
-     */
-    public function beforeCheckForm(EntityInterface $entity);
-
-    /**
-     * Code to execute after checking if form is submitted and valid
-     *
-     * @param \Mbx\ArchitectBundle\Interfaces\EntityInterface $entity
-     * @param array $extraVars
-     * @return mixed|void
-     */
-    public function afterCheckForm(EntityInterface $entity, $extraVars = array());
 
     /**
      * Creates a form to delete a managed entity.
@@ -94,20 +78,4 @@ interface FormHandlerInterface
      */
     public function processDeleteForm(EntityInterface $entity);
 
-    /**
-     * Code to execute before checking if delete form is submitted and valid
-     *
-     * @param \Mbx\ArchitectBundle\Interfaces\EntityInterface $entity
-     * @return array
-     */
-    public function beforeCheckDeleteForm(EntityInterface $entity);
-
-    /**
-     * Code to execute after checking if delete form is submitted and valid
-     *
-     * @param \Mbx\ArchitectBundle\Interfaces\EntityInterface $entity
-     * @param array $extraVars
-     * @return mixed
-     */
-    public function afterCheckDeleteForm(EntityInterface $entity, $extraVars = array());
 }

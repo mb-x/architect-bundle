@@ -7,10 +7,9 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-namespace Mbx\ArchitectBundle\Abstracts;
+namespace Mbx\ArchitectBundle\EntityManager;
 
 use Doctrine\ORM\EntityManager;
-use Mbx\ArchitectBundle\Interfaces\EntityManagerInterface;
 use Doctrine\ORM\EntityNotFoundException;
 use Mbx\ArchitectBundle\Interfaces\EntityInterface;
 

@@ -7,8 +7,10 @@ services:
         abstract: true
         class: '%mbx.abstract_entity_manager.class%'
         arguments: ['@doctrine.orm.entity_manager']
+        autowire: true
     mbx.abstract_form_handler:
         abstract: true
+        autowire: true
         arguments: ['@form.factory', '@request_stack', '@router']
     mbx.twig_extension:
         class: '%mbx.twig_extension.class%'
