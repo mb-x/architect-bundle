@@ -2,17 +2,12 @@
 
 namespace Mbx\ArchitectBundle\Event;
 
-
 use Mbx\ArchitectBundle\Interfaces\EntityInterface;
 use Symfony\Component\EventDispatcher\Event;
 
-class FormHandlerEvents extends Event
-{
-    const PRE_CREATE = 'formhandler.precreate';
-    const POST_CREATE = 'formhandler.postcreate';
-    const PRE_VALID = 'formhandler.prevalid';
-    const POST_VALID = 'formhandler.postvalid';
 
+class AbstractEvent extends Event
+{
     protected $entity;
 
     protected $args = [];
@@ -37,6 +32,7 @@ class FormHandlerEvents extends Event
     {
         return $this->args;
     }
+
     public function getArg($key)
     {
         return isset($this->args[$key]) ? $this->args[$key] : '';
@@ -52,6 +48,4 @@ class FormHandlerEvents extends Event
     {
         $this->args[$key] = $arg;
     }
-
-
 }

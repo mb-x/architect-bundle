@@ -10,6 +10,8 @@
 namespace Mbx\ArchitectBundle\FormHandler;
 
 use Mbx\ArchitectBundle\EntityManager\AbstractEntityManager;
+use Mbx\ArchitectBundle\Event\DeleteFormHandlerEvent;
+use Mbx\ArchitectBundle\Event\FormHandlerEvent;
 use Mbx\ArchitectBundle\Event\FormHandlerEvents;
 use Mbx\ArchitectBundle\Event\FormHandlerPreCreate;
 use Mbx\ArchitectBundle\Exception\NotStringException;
@@ -121,19 +123,19 @@ abstract class AbstractFormHandler implements FormHandlerInterface
     public function processForm(EntityInterface $entity)
     {
         /* PreFormCreate */
-        $formEvents = new FormHandlerEvents($entity);
-        $this->eventDispatcher->dispatch(FormHandlerEvents::PRE_CREATE, $formEvents);
+        $formEvent = new FormHandlerEvent($entity);
+        $this->eventDispatcher->dispatch(FormHandlerEvent::PRE_CREATE, $formEvent);
 
         $this->createForm($entity);
-        $this->eventDispatcher->dispatch(FormHandlerEvents::POST_CREATE, $formEvents);
+        $this->eventDispatcher->dispatch(FormHandlerEvent::POST_CREATE, $formEvent);
 
         $this->form->handleRequest($this->requestStack->getCurrentRequest());
 
-        $this->eventDispatcher->dispatch(FormHandlerEvents::PRE_VALID, $formEvents);
+        $this->eventDispatcher->dispatch(FormHandlerEvent::PRE_VALID, $formEvent);
 
         if ($this->form->isSubmitted() && $this->form->isValid()) {
 
-            $this->eventDispatcher->dispatch(FormHandlerEvents::POST_VALID, $formEvents);
+            $this->eventDispatcher->dispatch(FormHandlerEvent::POST_VALID, $formEvent);
 
             $this->manager->save($entity);
             return true;
@@ -150,17 +152,23 @@ abstract class AbstractFormHandler implements FormHandlerInterface
      */
     public function processDeleteForm(EntityInterface $entity)
     {
+        $deleteFormEvent = new DeleteFormHandlerEvent($entity);
+        $this->eventDispatcher->dispatch(DeleteFormHandlerEvent::PRE_CREATE, $deleteFormEvent);
+
         $form = $this->createDeleteForm($entity);
+        $this->eventDispatcher->dispatch(DeleteFormHandlerEvent::POST_CREATE, $deleteFormEvent);
+
         $form->handleRequest($this->requestStack->getCurrentRequest());
-        $extraVars = $this->beforeCheckDeleteForm($entity);
+
+        $this->eventDispatcher->dispatch(DeleteFormHandlerEvent::PRE_VALID, $deleteFormEvent);
+
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->afterCheckDeleteForm($entity, $extraVars);
+            $this->eventDispatcher->dispatch(DeleteFormHandlerEvent::POST_VALID, $deleteFormEvent);
             $this->manager->remove($entity);
             return true;
         }
         return false;
     }
-
 
     /**
      * Creates a form for a managed entity.

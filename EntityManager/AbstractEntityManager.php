@@ -11,7 +11,9 @@ namespace Mbx\ArchitectBundle\EntityManager;
 
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityNotFoundException;
+use Mbx\ArchitectBundle\Event\EntityManagerEvent;
 use Mbx\ArchitectBundle\Interfaces\EntityInterface;
+use Symfony\Component\EventDispatcher\EventDispatcher;
 
 /**
  * Abstract Entity Manager
@@ -20,6 +22,10 @@ use Mbx\ArchitectBundle\Interfaces\EntityInterface;
  */
 abstract class AbstractEntityManager implements EntityManagerInterface
 {
+    /**
+     * @var EventDispatcherInterface
+     */
+    protected $eventDispatcher;
 
     /**
      * @var \Doctrine\ORM\EntityManager
@@ -45,10 +51,12 @@ abstract class AbstractEntityManager implements EntityManagerInterface
 
     /**
      * @param EntityManager $em
+     * @param EventDispatcher $eventDispatcher
      */
-    public function __construct(EntityManager $em)
+    public function __construct(EntityManager $em, EventDispatcher $eventDispatcher)
     {
         $this->em = $em;
+        $this->eventDispatcher = $eventDispatcher;
         $this->init();
     }
 
@@ -96,10 +104,11 @@ abstract class AbstractEntityManager implements EntityManagerInterface
      */
     public function save(EntityInterface $entity)
     {
-        $extraVars = $this->beforeSave($entity);
+        $entityManagerEvent = new EntityManagerEvent($entity);
+        $this->eventDispatcher->dispatch(EntityManagerEvent::PRE_SAVE, $entityManagerEvent);
         $this->em->persist($entity);
         $this->em->flush();
-        $this->afterSave($entity, $extraVars);
+        $this->eventDispatcher->dispatch(EntityManagerEvent::POST_SAVE, $entityManagerEvent);
     }
 
     /**
@@ -108,9 +117,10 @@ abstract class AbstractEntityManager implements EntityManagerInterface
      */
     public function remove(EntityInterface $entity)
     {
-        $extraVars = $this->beforeRemove($entity);
+        $entityManagerEvent = new EntityManagerEvent($entity);
+        $this->eventDispatcher->dispatch(EntityManagerEvent::PRE_REMOVE, $entityManagerEvent);
         $this->em->remove($entity);
         $this->em->flush();
-        $this->afterRemove($entity, $extraVars);
+        $this->eventDispatcher->dispatch(EntityManagerEvent::POST_REMOVE, $entityManagerEvent);
     }
 }
